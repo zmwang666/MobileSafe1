@@ -35,7 +35,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				System.out.println(location);
 				
 				abortBroadcast();
-			}	
+			}
+			//是的，我想试试能不能从这修改呢！
 		}
 	}
 
