@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+    	style="@style/TitleStyle"    
+        android:text="功能列表" 
+        />
+    
+   	<TextView
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="5dp"
+   	    android:layout_marginBottom="15dp"
+   	    android:textColor="@color/black"
+   	    android:textSize="18sp"
+   	    android:text="欢迎使用手机安全卫士，这款软件深受广大用户的喜爱与支持！"
+   	    android:singleLine="true"
+   	    android:ellipsize="marquee"
+   	    android:focusable="true"
+   	    android:focusableInTouchMode="true"
+   	    />
+   	
+   	<GridView
+        android:id="@+id/gv_home" 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:verticalSpacing="20dp"
+        android:layout_weight="1"
+        android:numColumns="3"
+        ></GridView>
+
+</LinearLayout>
