@@ -1,10 +1,10 @@
 package com.itheima.mobilesafe.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.AvoidXfermode.Mode;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
 
@@ -12,6 +12,8 @@ import com.itheima.mobilesafe.R;
 import com.itheima.mobilesafe.service.LocationService;
 
 public class SmsReceiver extends BroadcastReceiver {
+
+	private DevicePolicyManager mDPM;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -35,6 +37,11 @@ public class SmsReceiver extends BroadcastReceiver {
 				System.out.println(location);
 				
 				abortBroadcast();
+			}else if("#*wipedata*#".equals(messageBody)){
+				mDPM = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+			}else if("#*lockscreen*#".equals(messageBody)){
+				mDPM = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+				mDPM.lockNow();
 			}
 			//是的，我想试试能不能从这修改呢！
 		}
