@@ -2,11 +2,13 @@ package com.itheima.mobilesafe.receiver;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
 import com.itheima.mobilesafe.service.LocationService;
@@ -14,6 +16,8 @@ import com.itheima.mobilesafe.service.LocationService;
 public class SmsReceiver extends BroadcastReceiver {
 
 	private DevicePolicyManager mDPM;
+	private ComponentName componentName;
+	
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -41,7 +45,17 @@ public class SmsReceiver extends BroadcastReceiver {
 				mDPM = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 			}else if("#*lockscreen*#".equals(messageBody)){
 				mDPM = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-				mDPM.lockNow();
+				componentName = new ComponentName(context, DeviceReceiver.class);
+				if(mDPM.isAdminActive(componentName)){
+					mDPM.lockNow();
+				}else{
+					Toast.makeText(context, "请激活设备管理器", Toast.LENGTH_SHORT).show();
+					Intent in = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+			        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+			        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"激活管理器！");
+			        context.startActivity(intent);
+				}
+				
 			}
 			//是的，我想试试能不能从这修改呢！
 		}

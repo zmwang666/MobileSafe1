@@ -1,6 +1,7 @@
 package com.itheima.mobilesafe.activity;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -104,6 +105,8 @@ public class SplashActivity extends Activity {
         tvProgress = (TextView) findViewById(R.id.tv_progress);
         spUpte = getSharedPreferences("config", MODE_PRIVATE);
         boolean autoUpdate = spUpte.getBoolean("autoUpdate", true);
+        
+        copyDBtoFile("address.db");//拷贝asserts中的地址数据库到文件夹中，供程序查找使用
         if(autoUpdate){
         	checkVersion();
         }else{
@@ -305,4 +308,38 @@ public class SplashActivity extends Activity {
     	finish();
     	
     }
+	/*
+	 * 将assets中对应的的数据库拷贝到data/data/包名/files下
+	 * */
+	public void copyDBtoFile(String dbName){
+		//getFileDir是文件夹名，dbName是文件名
+		File file = new File(getFilesDir(), dbName);
+		InputStream in = null;
+		FileOutputStream fo = null;
+		
+		if(file.exists()){
+			return;
+		}
+		try {
+			in = getAssets().open(dbName);
+			fo = new FileOutputStream(file);
+			int len;
+			byte[] buffer = new byte[1024];
+			while((len = in.read(buffer))!= -1){
+				fo.write(buffer, 0, len);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				in.close();
+				fo.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
 }

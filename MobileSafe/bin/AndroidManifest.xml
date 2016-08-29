@@ -39,6 +39,8 @@
         <activity android:name="com.itheima.mobilesafe.activity.Setup3Activity"></activity>
         <activity android:name="com.itheima.mobilesafe.activity.Setup4Activity"></activity>
         <activity android:name="com.itheima.mobilesafe.activity.ContactsActivity"></activity>
+        <activity android:name="com.itheima.mobilesafe.activity.AToolsActivity"></activity>
+        <activity android:name="com.itheima.mobilesafe.activity.AddressActivity"></activity>
         <receiver android:name="com.itheima.mobilesafe.receiver.BootCompleteReceiver">
             <intent-filter >
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
